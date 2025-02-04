@@ -38,6 +38,11 @@
 
             <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
+             {# Lien pour mot de passe oublié  #}
+             <div class="uk-margin">
+                <a href="{{ path('forgot_password_request') }}" class="uk-link-text">Mot de passe oublié ?</a>
+            </div>
+
             <div class="uk-margin">
                 <button type="submit" class="uk-button uk-button-default uk-width-1-1">Connexion</button>
             </div>
