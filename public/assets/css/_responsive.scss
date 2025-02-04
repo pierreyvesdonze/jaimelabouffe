@@ -1,0 +1,55 @@
+/*
+***********************************
+MEDIA QUERIES
+***********************************
+*/
+
+// Very small screens
+$breakpoint-xs: 300px;
+
+// Small tablets and large smartphones (landscape view)
+$breakpoint-sm: 576px;
+
+// Small tablets (portrait view)
+$breakpoint-md: 768px;
+
+// Tablets and small desktops
+$breakpoint-lg: 992px;
+
+// Large tablets and desktops
+$breakpoint-xl: 1280px;
+
+// Extra large devices
+@mixin xl {
+  @media (min-width: #{$breakpoint-xl}) {
+    @content;
+  }
+}
+
+// Large devices
+@mixin lg {
+  @media (min-width: #{$breakpoint-lg}) and (max-width: #{$breakpoint-xl}) {
+    @content;
+  }
+}
+
+// Medium devices
+@mixin md {
+  @media (min-width: #{$breakpoint-md}) and (max-width: #{$breakpoint-lg}) {
+    @content;
+  }
+}
+
+// Small devices
+@mixin sm {
+  @media (min-width: #{$breakpoint-sm}) and (max-width: #{$breakpoint-md}) {
+    @content;
+  }
+}
+
+// XSmall devices
+@mixin xs {
+  @media (min-width: #{$breakpoint-xs}) and (max-width: #{$breakpoint-sm}) {
+    @content;
+  }
+}
