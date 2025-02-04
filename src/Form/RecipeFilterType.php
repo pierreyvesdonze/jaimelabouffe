@@ -22,7 +22,7 @@ class RecipeFilterType extends AbstractType
                 'expanded'     => true,
                 'attr'         => [
                     'class' => 'uk-checkbox',
-                ]
+                ],
             ])
             ->add('save', SubmitType::class, [
                 'label' => 'Filtrer',
