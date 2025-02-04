@@ -134,6 +134,9 @@ ALERT / FLASH MESSAGE / MODAL
 UI KIT
  ***************************
  */
+ .uk-card-body {
+    height: 245px !important;
+ }
  .uk-checkbox {
     height: 150px !important;
     width: 100% !important;
