@@ -28,6 +28,17 @@ final class RecipeController extends AbstractController
     ): Response {
         $recipes = $recipeRepository->findByCategory($category);
 
+        // Récupérer le mot-clé de la recherche (si il existe)
+        $keyword = $request->query->get('q', '');
+
+        if ($keyword) {
+            // Recherche par nom ou ingrédient (texte)
+            $recipes = array_filter($recipes, function ($recipe) use ($keyword) {
+                return stripos($recipe->getName(), $keyword) !== false || 
+                       stripos($recipe->getIngredient(), $keyword) !== false; 
+            });
+        }
+        
         // Pagination avec limite de 21 articles par page
         $pagination = $paginator->paginate(
             $recipes,

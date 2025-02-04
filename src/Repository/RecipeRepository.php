@@ -25,6 +25,11 @@ class RecipeRepository extends ServiceEntityRepository
                 ->setParameter('category', $category);
         }
 
-        return $qb->getQuery()->getResult();
+        $recipes = $qb->getQuery()->getResult();
+
+        // Mélanger aléatoirement les résultats en PHP
+        shuffle($recipes);
+        
+        return $recipes;
     }
 }

@@ -70,7 +70,7 @@ class ResetPasswordController extends AbstractController
         return $this->render('reset_password/check_email.html.twig', [
             'resetToken' => $resetToken, // Simple token string
             'expirationMessageKey' => 'expiration_time', // Clé d'expiration fictive
-            'expirationMessageData' => '24 hours', // Durée fictive
+            'expirationMessageData' => '24 heures', // Durée fictive
         ]);
     }
 
