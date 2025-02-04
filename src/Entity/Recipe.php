@@ -48,12 +48,15 @@ class Recipe
      * @var Collection<int, Tag>
      */
     #[ORM\ManyToMany(targetEntity: Tag::class, inversedBy: 'recipes')]
-    private Collection $tag;
+    #[ORM\JoinTable(name: 'recipe_tags')]
+    private Collection $tags;
 
     public function __construct()
     {
-        $this->tag = new ArrayCollection();
+        $this->tags = new ArrayCollection();
     }
+
+
 
     public function getId(): ?int
     {
@@ -171,15 +174,15 @@ class Recipe
     /**
      * @return Collection<int, Tag>
      */
-    public function getTag(): Collection
+    public function getTags(): Collection
     {
-        return $this->tag;
+        return $this->tags;
     }
 
     public function addTag(Tag $tag): static
     {
-        if (!$this->tag->contains($tag)) {
-            $this->tag->add($tag);
+        if (!$this->tags->contains($tag)) {
+            $this->tags->add($tag);
         }
 
         return $this;
@@ -187,7 +190,7 @@ class Recipe
 
     public function removeTag(Tag $tag): static
     {
-        $this->tag->removeElement($tag);
+        $this->tags->removeElement($tag);
 
         return $this;
     }

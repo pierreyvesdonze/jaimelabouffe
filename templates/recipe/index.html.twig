@@ -16,39 +16,30 @@
         <div id="filterForm" hidden class="uk-card uk-card-default uk-card-body uk-margin-top">
             <section class="custom-form">
                 <fieldset class="uk-fieldset">
-                    {# {{ form_start(form, { 'attr': { 'id': 'filterForm' } }) }}
+                    {{ form_start(filterForm) }}
 
                     <div class="uk-margin">
-                        {{ form_row(form.genderCategory) }}
+                        <div class="uk-grid-small uk-child-width-1-4@m uk-child-width-1-2@s" uk-grid>
+                            {% for tag in filterForm.tags %}
+                            <div class="uk-flex uk-flex-middle">
+                                {{ form_widget(tag) }}
+                                {{ form_label(tag, null, {'label_attr': {'class': 'uk-margin-small-left'}}) }}
+                            </div>
+                            {% endfor %}
+                        </div>
                     </div>
-                    <div class="uk-margin">
-                        {{ form_row(form.mainCategory) }}
-                    </div>
-                    <div class="uk-margin">
-                        {{ form_row(form.category) }}
-                    </div>
-                    <div class="uk-margin">
-                        {{ form_row(form.size) }}
-                    </div>
-                    <div class="uk-margin">
-                        {{ form_row(form.brand) }}
-                    </div>
-                    <div class="uk-margin">
-                        {{ form_row(form.color) }}
-                    </div>
-                    <div class="uk-margin">
-                        {{ form_row(form.filter) }}
-                    </div>
-
-                    {{ form_end(form) }} #}
-                     (en construction)
+                    {{ form_end(filterForm) }}
                 </fieldset>
             </section>
-            <a id="resetFilters" class="uk-link-muted" href="#">
+
+            <br>
+
+            <a id="resetFilters" class="uk-link-muted" href="{{ path('recipe_index') }}">
                 Réinitialiser les filtres
             </a>
         </div>
     </div>
+
 </div>
 
 <hr class="uk-divider-icon">

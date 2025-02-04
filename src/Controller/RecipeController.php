@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Recipe;
+use App\Form\RecipeFilterType;
 use App\Form\RecipeType;
 use App\Repository\RecipeRepository;
 use App\Service\ImageResizer;
@@ -19,38 +20,68 @@ final class RecipeController extends AbstractController
 {
     public function __construct(private EntityManagerInterface $entityManager) {}
 
-    #[Route('s/{category}', name: 'recipe_index', methods: ['GET'], defaults: ['category' => null])]
+    #[Route('s/{category}', name: 'recipe_index', methods: ['GET', 'POST'], defaults: ['category' => null])]
     public function index(
         ?string $category,
         RecipeRepository $recipeRepository,
         PaginatorInterface $paginator,
-        Request $request,
+        Request $request
     ): Response {
-        $recipes = $recipeRepository->findByCategory($category);
+        // Récupérer toutes les recettes
+        $allRecipes = $recipeRepository->findAll();
 
-        // Récupérer le mot-clé de la recherche (si il existe)
-        $keyword = $request->query->get('q', '');
-
-        if ($keyword) {
-            // Recherche par nom ou ingrédient (texte)
-            $recipes = array_filter($recipes, function ($recipe) use ($keyword) {
-                return stripos($recipe->getName(), $keyword) !== false || 
-                       stripos($recipe->getIngredient(), $keyword) !== false; 
+        // Appliquer un filtre de catégorie si nécessaire
+        if ($category) {
+            $allRecipes = array_filter($allRecipes, function ($recipe) use ($category) {
+                return $recipe->getCategory() === $category;
             });
         }
+
+        // Récupérer le mot-clé de la barre de recherche
+        $keyword = $request->query->get('q', '');
+
+        // Appliquer la recherche par nom ou ingrédient
+        if ($keyword) {
+            $allRecipes = array_filter($allRecipes, function ($recipe) use ($keyword) {
+                // Transformer la collection de tags en une chaîne de texte
+                $tagsString = implode(', ', $recipe->getTags()->map(fn($tag) => $tag->getName())->toArray());
         
-        // Pagination avec limite de 21 articles par page
+                return stripos($recipe->getName(), $keyword) !== false ||
+                    stripos($recipe->getIngredient(), $keyword) !== false ||
+                    stripos($tagsString, $keyword) !== false;
+            });
+        }
+
+        // Création du formulaire de filtrage par tags
+        $form = $this->createForm(RecipeFilterType::class);
+        $form->handleRequest($request);
+
+        // Par défaut, on prend toutes les recettes (pagination toujours sur `$recipes`)
+        $recipes = $allRecipes;
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $selectedTags = $form->get('tags')->getData()->toArray(); // Récupérer les tags sélectionnés
+
+            if (!empty($selectedTags)) {
+                // Filtrer uniquement si des tags sont sélectionnés
+                $recipes = $recipeRepository->filterRecipesByTags($selectedTags);
+            }
+        }
+
+        // Pagination (toujours sur `$recipes`)
         $pagination = $paginator->paginate(
             $recipes,
-            $request->query->getInt('page', 1),
-            21
+            $request->query->getInt('page', 1), // Page actuelle
+            21 // Nombre de recettes par page
         );
 
         return $this->render('recipe/index.html.twig', [
-            'recipes'   => $pagination,
-            'category ' => $category
+            'recipes'    => $pagination, // Passe la pagination aux résultats
+            'filterForm' => $form->createView(), // Passe le formulaire pour les filtres
+            'category'   => $category // Passe la catégorie actuelle (si applicable)
         ]);
     }
+
 
     #[Route('/nouvelle', name: 'recipe_new', methods: ['GET', 'POST'])]
     public function new(

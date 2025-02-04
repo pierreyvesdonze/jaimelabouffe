@@ -34,6 +34,11 @@
                         {% endif %}
                     </p>
 
+                    <br><br>
+                    {% for tag in recipe.tags %}
+                        #{{ tag.name }}
+                    {% endfor %}
+
                     <hr class="uk-margin-large">
 
                     <h4>Ingrédients</h4>

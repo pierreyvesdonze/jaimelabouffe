@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Recipe;
+use App\Entity\Tag;
 use App\Entity\User;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -40,11 +41,21 @@ class RecipeType extends AbstractType
                     'class' => 'uk-select',
                 ]
             ])
+            ->add('tags', EntityType::class, [
+                'class' => Tag::class,          
+                'choice_label' => 'name',      
+                'label' => 'Tags',             
+                'multiple' => true,           
+                'expanded' => true,
+                'attr' => [
+                    'class' => 'uk-checkbox'
+                ]
+            ])
             ->add('ingredient', TextareaType::class, [
                 'label' => false,
                 'attr'  => [
                     'class'       => 'uk-input',
-                    'placeholder' => 'Liste les ingrédients'
+                    'placeholder' => 'Liste les ingrédients + quantité'
                 ]
             ])
             ->add('description', TextareaType::class, [
