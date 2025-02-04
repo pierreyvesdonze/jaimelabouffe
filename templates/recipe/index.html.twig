@@ -1,0 +1,113 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}| Recettes{% endblock %}
+
+{% block body %}
+
+<div class="uk-container uk-flex uk-flex-center uk-margin-medium-top">
+
+    {# Filtres #}
+    <div class="uk-inline">
+        <button class="uk-button uk-button-default" type="button"
+            uk-toggle="target: #filterForm; animation: uk-animation-fade">
+            <span uk-icon="icon: settings"></span> Filtres
+        </button>
+
+        <div id="filterForm" hidden class="uk-card uk-card-default uk-card-body uk-margin-top">
+            <section class="custom-form">
+                <fieldset class="uk-fieldset">
+                    {# {{ form_start(form, { 'attr': { 'id': 'filterForm' } }) }}
+
+                    <div class="uk-margin">
+                        {{ form_row(form.genderCategory) }}
+                    </div>
+                    <div class="uk-margin">
+                        {{ form_row(form.mainCategory) }}
+                    </div>
+                    <div class="uk-margin">
+                        {{ form_row(form.category) }}
+                    </div>
+                    <div class="uk-margin">
+                        {{ form_row(form.size) }}
+                    </div>
+                    <div class="uk-margin">
+                        {{ form_row(form.brand) }}
+                    </div>
+                    <div class="uk-margin">
+                        {{ form_row(form.color) }}
+                    </div>
+                    <div class="uk-margin">
+                        {{ form_row(form.filter) }}
+                    </div>
+
+                    {{ form_end(form) }} #}
+                </fieldset>
+            </section>
+            <a id="resetFilters" class="uk-link-muted" href="#">
+                Réinitialiser les filtres
+            </a>
+        </div>
+    </div>
+</div>
+
+<hr class="uk-divider-icon">
+
+<div class="uk-container" style="max-width: 1280px;">
+    {% if recipes|length > 0 %}
+    <div class="uk-grid-small uk-child-width-1-2@s uk-child-width-1-3@m uk-child-width-1-4@l uk-flex-center" uk-grid
+        uk-scrollspy="cls: uk-animation-slide-bottom; target: .uk-card; delay: 150; repeat: false">
+        {% for recipe in recipes %}
+        <div style="margin: 10px;">
+
+            <div class="uk-card uk-card-default">
+                <div class="uk-card-media-top uk-flex uk-flex-center uk-flex-middle"
+                    style="width: 100%; height: 200px; overflow: hidden;">
+                    {% if recipe.image is not empty %}
+                    <a href="{{ path('recipe_show', {id: recipe.id}) }}">
+                        <img src="{{ asset('assets/images/' ~ recipe.image) }}"
+                            style="width: 100%; height: 100%; object-fit: cover;" alt="image-vetement">
+                    </a>
+                    {% endif %}
+                </div>
+                <div class="uk-card-body" style="height: 210px; padding: 10px;">
+                    <h3 class="uk-card-title">{{ recipe.name }}</h3>
+                    <div style="height: 60px;">
+                        <p class="uk-text-meta uk-margin-remove-top">
+                            <span uk-icon="icon: users" class="uk-icon"></span>
+                            {{ recipe.portion }}
+                            <br>
+                            <br>
+                            {% if recipe.timePrepa %}
+                            Temps de préparation : {{ recipe.timePrepa }}
+                            <br>
+                            {% endif %}
+                            {% if recipe.timeCook %}
+                            Temps de cuisson : {{ recipe.timeCook }}
+                            {% endif %}
+                        </p>
+                    </div>
+                    <br>
+                    <br>
+                    {% if recipe.user == app.user %}
+                    <a class="uk-button uk-button-default"
+                        href="{{ path('recipe_edit', {id: recipe.id}) }}">Modifier</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+
+        <div class="paginator uk-flex uk-flex-center uk-flex-middle">
+            {{ knp_pagination_render(recipes) }}
+        </div>
+    </div>
+
+    {% else %}
+
+    <div class="uk-text-center uk-margin-large-top">
+        <h3>Désolé, aucune recette n'a été trouvée.</h3>
+
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

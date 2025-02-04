@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}| {{ recipe.name }} {% endblock %}
+
+{% block body %}
+<div class="uk-flex uk-flex-center uk-flex-middle uk-margin-large-top" style="min-height: 80vh;">
+    <div class="uk-container uk-width-2-3@m">
+        <div class="uk-grid uk-grid-large uk-flex uk-flex-center" uk-grid>
+
+            <!-- Colonne 1 : Image -->
+            {% if recipe.image %}
+            <div class="uk-width-1-2@m uk-text-center" uk-lightbox="animation: scale">
+                <a class="uk-inline" href="{{ asset('assets/images/' ~ recipe.image) }}" data-caption="Image">
+                    <img src="{{ asset('assets/images/' ~ recipe.image) }}" alt="Image de la recette"
+                        class="uk-border-rounded uk-object-cover" style="height: 400px; width: auto; max-width: 100%;">
+                </a>
+            </div>
+            {% endif %}
+
+            <!-- Colonne 2 : Card de la recette -->
+            <div class="uk-width-1-2@m">
+                <div class="uk-card uk-card-default uk-card-body uk-text-center">
+                    <h3 class="uk-card-title">{{ recipe.name }}</h3>
+                    <p class="uk-text-meta uk-margin-remove-top">
+                        <span uk-icon="icon: users" class="uk-icon"></span>
+                        {{ recipe.portion }}
+                        <br><br>
+                        {% if recipe.timePrepa %}
+                        Temps de préparation : {{ recipe.timePrepa }}
+                        <br>
+                        {% endif %}
+                        {% if recipe.timeCook %}
+                        Temps de cuisson : {{ recipe.timeCook }}
+                        {% endif %}
+                    </p>
+
+                    <hr class="uk-margin-large">
+
+                    <h4>Ingrédients</h4>
+                    {{ recipe.ingredient|nl2br }}
+                    <br><br>
+                    
+                    <h4>Description</h4>
+                    {{ recipe.description|nl2br }}
+
+                    <hr class="uk-margin-large">
+
+                    {% if app.user == recipe.user %}
+                    <a class="uk-button uk-button-default" href="{{ path('recipe_edit', {'id': recipe.id}) }}">
+                        Modifier
+                    </a>
+                    <br><br>
+
+                    {{ include('recipe/_delete_form.html.twig') }}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Recipe{% endblock %}
+
+{% block body %}
+{{ form_start(form) }}
+
+<section class="custom-form">
+    <h1 class="uk-align-center">Ajouter une nouvelle recette</h1>
+    <br><br><br>
+    <fieldset class="uk-fieldset">
+        <div class="uk-margin">
+            {{ form_widget(form.name) }}
+        </div>
+
+        <div class="uk-margin">
+            {{ form_widget(form.category) }}
+        </div>
+
+        <div class="uk-margin">
+            {{ form_widget(form.ingredient) }}
+        </div>
+
+        <div class="uk-margin">
+            {{ form_widget(form.description) }}
+        </div>
+
+        <div class="uk-margin">
+            {{ form_widget(form.timePrepa) }}
+        </div>
+
+        <div class="uk-margin">
+            {{ form_widget(form.timeCook) }}
+        </div>
+
+        <div class="uk-margin">
+            {{ form_widget(form.portion) }}
+        </div>
+
+        <div class="uk-margin">
+            {{ form_widget(form.image) }}
+        </div>
+
+        <div class="uk-margin">
+            {{ form_widget(form.save) }}
+        </div>
+    </fieldset>
+</section>
+
+{{ form_end(form) }}
+
+    {{ include('recipe/_delete_form.html.twig') }}
+{% endblock %}

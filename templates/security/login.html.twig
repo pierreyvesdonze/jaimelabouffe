@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Connexion{% endblock %}
+
+{% block body %}
+<section class="uk-section uk-section-small uk-flex uk-flex-center">
+    <div class="uk-width-medium">
+        <h1 class="uk-heading-line"><span>Connexion</span></h1>
+
+        <form method="post" name="login_form" class="uk-form-stacked">
+            {% if error %}
+                <div class="uk-alert-danger" uk-alert>
+                    <p>Email ou mot de passe invalide</p>
+                </div>
+            {% endif %}
+
+            {% if app.user %}
+                <div class="uk-alert-primary" uk-alert>
+                    Vous êtes connecté en tant que {{ app.user.userIdentifier }}, <a href="{{ path('logout') }}">Déconnexion</a>
+                </div>
+            {% endif %}
+
+            <div class="uk-margin">
+                <div class="uk-form-controls">
+                    <input type="email" value="{{ last_username }}" name="_username" id="inputEmail" 
+                           class="uk-input" autocomplete="email" required autofocus 
+                           placeholder="Email">
+                </div>
+            </div>
+
+            <div class="uk-margin">
+                <div class="uk-form-controls">
+                    <input type="password" name="_password" id="inputPassword" 
+                           class="uk-input" autocomplete="current-password" required 
+                           placeholder="Mot de passe">
+                </div>
+            </div>
+
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+            <div class="uk-margin">
+                <button type="submit" class="uk-button uk-button-default uk-width-1-1">Connexion</button>
+            </div>
+        </form>
+    </div>
+</section>
+{% endblock %}

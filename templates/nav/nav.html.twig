@@ -1,0 +1,78 @@
+<div uk-sticky="sel-target: .uk-navbar-container; cls-active: uk-navbar-sticky;">
+    <nav class="uk-navbar-container">
+        <div class="uk-container">
+            <div uk-navbar="dropbar: true; dropbar-anchor: !.uk-navbar-container; target-y: !.uk-navbar-container">
+                <div class="uk-navbar-center">
+                    <ul class="uk-navbar-nav">
+                        <li class="uk-active"><a href="{{ path('home') }}">
+                                <img src="{{ asset('assets/icons/icon_jlb_nav.png') }}" alt="" style="width: 40px;">
+                            </a></li>
+
+                        {# RECETTES #}
+                        <li>
+                            <a href="#">Recettes</a>
+                            <div class="uk-navbar-dropdown uk-navbar-dropdown-width-2">
+                                <div class="uk-drop-grid uk-child-width-1-3" uk-grid>
+                                    <div>
+                                        <ul class="uk-nav uk-navbar-dropdown-nav">
+                                            <li class="uk-active">
+                                                <a href="#"><span
+                                                        class="material-symbols-outlined">restaurant</span></a>
+                                            </li>
+                                            <li><a href="{{ path('recipe_index') }}">Voir tout</a></li>
+                                            <li><a href="{{ path('recipe_index', {'category': 'entrée'}) }}">Entrées</a>
+                                            </li>
+                                            <li><a href="{{ path('recipe_index', {'category': 'plat'}) }}">Plats</a>
+                                            </li>
+                                            <li><a
+                                                    href="{{ path('recipe_index', {'category': 'dessert'}) }}">Desserts</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+
+                        {# UTILISATEUR #}
+                        <li>
+                            <a href="#"><span uk-icon="icon: user"></span></a>
+                            <div class="uk-navbar-dropdown uk-navbar-dropdown-width-3">
+                                <div class="uk-drop-grid uk-child-width-1-2@m uk-grid-large" uk-grid>
+                                    <div>
+                                        <ul class="uk-nav uk-navbar-dropdown-nav">
+                                            {% if app.user %}
+                                            <li class="uk-active"><a href="#">Gestion du compte</a></li>
+                                            <li><a href="{{ path('recipe_new') }}">Ajouter une recette</a></li>
+                                            <li><a href="#">Mon compte</a></li>
+                                            <li class="uk-nav-divider"></li>
+                                            <li><a href="{{ path('logout') }}"><span uk-icon="icon: sign-out"></span>
+                                                    Déconnexion</a></li>
+                                            {% else %}
+                                            <li><a href="{{ path('login') }}"><span uk-icon="icon: sign-in"></span> Se
+                                                    connecter</a></li>
+                                            <li><a href="{{ path('register') }}">S'enregistrer</a></li>
+                                            {% endif %}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+</div>
+
+{# Barre de recherche #}
+<nav class="uk-navbar-container uk-navbar" uk-navbar>
+    <div class="uk-navbar-center">
+        <div class="uk-navbar-item">
+            <form class="uk-search uk-search-navbar" method="GET" action="#">
+                <span uk-search-icon></span>
+                <input class="uk-search-input" type="search" name="q" placeholder="Rechercher" aria-label="Search"
+                    value="{{ app.request.query.get('q') }}">
+            </form>
+        </div>
+    </div>
+</nav>

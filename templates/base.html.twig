@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}| J'aime la bouffe !{% endblock %}</title>
+    <link rel="icon" href="{{ asset('assets/icons/jlb_favicon.png') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.22.2/dist/css/uikit.min.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+
+    {% block stylesheets %}
+    {% endblock %}
+</head>
+
+<body>
+    {# Navbar #}
+    {% include "nav/nav.html.twig" %}
+
+    {# Flash messages #}
+    {% for label, messages in app.flashes %}
+    {% for message in messages %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            UIkit.notification({
+                message: '<div class="alert alert-{{ label }}">{{ message|e("js") }}</div>',
+                status: '{{ label == "success" ? "success" : "danger" }}',
+                pos: 'top-right',
+                timeout: 5000
+            });
+        });
+    </script>
+    {% endfor %}
+    {% endfor %}
+
+    {# Loader/Spinner #}
+    <div id="page-loader" hidden uk-spinner="ratio: 3" class="uk-position-fixed uk-position-center uk-text-primary"></div>
+
+    {% block body %}{% endblock %}
+
+    {% block javascripts %}
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.22.2/dist/js/uikit.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.22.2/dist/js/uikit-icons.min.js"></script>
+    <script src="{{ asset('assets/js/spinner.js') }}"></script>
+    <script src="{{ asset('assets/js/filters.js') }}"></script>
+    {% endblock %}
+</body>
+
+</html>

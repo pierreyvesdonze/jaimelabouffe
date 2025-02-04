@@ -1,0 +1,34 @@
+<form id="delete-form" method="post" action="{{ path('recipe_delete', {'id': recipe.id}) }}">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ recipe.id) }}">
+    <button type="button" class="uk-button uk-button-danger" onclick="showDeleteConfirmation()">Supprimer</button>
+</form>
+
+<!-- Fenêtre modale de confirmation -->
+<div id="confirmation-modal" class="modal-delete-confirm">
+    <div class="modal-content">
+        <p>Supprimer cette recette définitivement ?</p>
+        <button onclick="submitDeleteForm()" class="uk-button uk-button-danger">Oui</button>
+        <button onclick="closeModal()" class="uk-button uk-button-default">Non</button>
+    </div>
+</div>
+
+<script>
+    function showLoader() {
+        const loader = document.getElementById("page-loader");
+        loader.removeAttribute("hidden");
+    }
+    
+    function showDeleteConfirmation() {
+        document.getElementById('confirmation-modal').style.display = 'flex'; // Afficher la modale
+    }
+
+    function closeModal() {
+        document.getElementById('confirmation-modal').style.display = 'none'; // Cacher la modale
+    }
+
+    function submitDeleteForm() {
+        // Afficher le loader ici si nécessaire avant la soumission du formulaire
+        showLoader();
+        document.getElementById('delete-form').submit();
+    }
+</script>

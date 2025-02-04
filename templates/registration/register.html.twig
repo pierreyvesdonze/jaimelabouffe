@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}M'enregistrer{% endblock %}
+
+{% block body %}
+<section class="uk-section uk-section-large uk-flex uk-flex-center">
+    <div class="uk-width-medium">
+        <h1 class="uk-heading-line"><span>M'enregistrer</span></h1>
+
+        {{ form_start(registrationForm, {'attr': {'class': 'uk-form-stacked'}}) }}
+
+        <div class="uk-margin">
+            <div class="uk-form-controls">
+                {{ form_widget(registrationForm.email, {'attr': {'class': 'uk-input', 'placeholder': 'Email'}}) }}
+            </div>
+            {% for error in registrationForm.email.vars.errors %}
+            <div class="uk-text-danger">{{ error.message }}</div>
+            {% endfor %}
+        </div>
+
+        <div class="uk-margin">
+            <div class="uk-form-controls">
+                {{ form_widget(registrationForm.pseudo, {'attr': {'class': 'uk-input', 'placeholder': 'Votre pseudo publique'}}) }}
+            </div>
+        </div>
+
+        <div class="uk-margin">
+            <div class="uk-form-controls">
+                {{ form_widget(registrationForm.plainPassword.first, {'attr': {'class': 'uk-input', 'placeholder': 'Mot
+                de passe'}}) }}
+            </div>
+            {{ form_errors(registrationForm.plainPassword.first) }}
+        </div>
+
+        <div class="uk-margin">
+            <div class="uk-form-controls">
+                {{ form_widget(registrationForm.plainPassword.second, {'attr': {'class': 'uk-input', 'placeholder':
+                'Confirmer le mot de passe'}}) }}
+            </div>
+            {{ form_errors(registrationForm.plainPassword.second) }}
+        </div>
+
+        <div class="uk-margin">
+            {{ form_widget(registrationForm.submit, {'attr': {'class': 'uk-button uk-button-default uk-width-1-1'}}) }}
+        </div>
+
+        {{ form_end(registrationForm) }}
+    </div>
+</section>
+{% endblock %}
