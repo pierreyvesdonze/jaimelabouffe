@@ -20,7 +20,7 @@ class Recipe
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 35)]
     private ?string $name = null;
 
     #[ORM\Column(type: Types::TEXT)]

@@ -107,13 +107,15 @@ ALERT / FLASH MESSAGE / MODAL
 }
 
 .modal-delete-confirm {
-    display: none; /* Modale cachée par défaut */
+    display: none;
+    /* Modale cachée par défaut */
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Fond semi-transparent */
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Fond semi-transparent */
     justify-content: center;
     align-items: center;
 }
@@ -134,10 +136,15 @@ ALERT / FLASH MESSAGE / MODAL
 UI KIT
  ***************************
  */
- .uk-card-body {
+.uk-card-body {
     height: 245px !important;
- }
- .uk-checkbox {
+}
+
+.uk-checkbox {
     height: 150px !important;
     width: 100% !important;
- }
+}
+
+.uk-textarea {
+    height: 150px !important;
+}

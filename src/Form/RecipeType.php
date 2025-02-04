@@ -54,14 +54,14 @@ class RecipeType extends AbstractType
             ->add('ingredient', TextareaType::class, [
                 'label' => false,
                 'attr'  => [
-                    'class'       => 'uk-input',
+                    'class'       => 'uk-textarea',
                     'placeholder' => 'Liste les ingrédients + quantité'
                 ]
             ])
             ->add('description', TextareaType::class, [
                 'label' => false,
                 'attr'  => [
-                    'class'       => 'uk-input',
+                    'class'       => 'uk-textarea',
                     'placeholder' => 'Décris la recette'
                 ]
             ])
